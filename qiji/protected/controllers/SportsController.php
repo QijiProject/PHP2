@@ -32,7 +32,7 @@ class SportsController extends Controller
                 // $token = $token.NET::getServerAddr();//<--NET::getServerAddr()是获取服务器所属机房，暂不需考虑
                 $im = new IMSportsbook($this->prefix, $name, $token);
                 $result = $im->login($tm);
-                // echo"<pre>";var_dump($result);exit;
+                
                 if ($result->succ) {
                     $url = 'http://imsports.kzonlinegame.com/?timestamp=' . $tm . '&token=' . $token . '&LanguageCode=chs';
                     $this->redirect($url);
