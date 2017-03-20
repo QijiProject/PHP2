@@ -5,16 +5,22 @@
  */
 class IMSportsbook extends CFormModel
 {
+    // test server
+    const AUTH_URL = 'http://qijigroup.sbws.test.imapi.net/externalapi.asmx';
+    const LOGIN_URL = 'http://qijigroup.sbws.test.imapi.net/externalapi.asmx';
+    const LOGOUT_URL = 'http://qijigroup.sbws.test.imapi.net/externalapi.asmx';
+    private $_key = '3fbd540c4c1e13e87';
+    private $_membercode = 'test';
 
-    const AUTH_URL = 'http://keizak.sbws.imapi.net/externalapi.asmx';
-    const LOGIN_URL = 'http://keizak.sbws.imapi.net/externalapi.asmx';
-    const LOGOUT_URL = 'http://keizak.sbws.imapi.net/externalapi.asmx';
-    private $_key = 'xxxxxxxxxx';
+    // const AUTH_URL = 'http://keizak.sbws.imapi.net/externalapi.asmx';
+    // const LOGIN_URL = 'http://keizak.sbws.imapi.net/externalapi.asmx';
+    // const LOGOUT_URL = 'http://keizak.sbws.imapi.net/externalapi.asmx';
+    // private $_key = 'xxxxxxxxxx';
     private $_iv;
     private $_token;
     private $_prefix;
     private $_name;
-    private $_membercode;
+    // private $_membercode;
     /**
      * @param $prefix
      * @param $name
@@ -25,7 +31,7 @@ class IMSportsbook extends CFormModel
         $this->_iv = 'dieD5ksoWf3=';
         $this->_prefix = $prefix;
         $this->_name = $name;
-        $this->_membercode = $prefix . '_' . $name;//未定
+        // $this->_membercode = $prefix . '_' . $name;//未定
         $this->_token = $token;
     }
 
@@ -56,6 +62,30 @@ class IMSportsbook extends CFormModel
             </loginXML>
             </soap:Body>
             </soap:Envelope>', $tm, $this->_token);
+
+        // var_dump($xml);exit;
+
+        $curl = new Curl();
+        $curl->setHeader('Content-Type', 'text/xml');
+        $curl->post(self::AUTH_URL, $xml);
+
+        return $this->parse_response($curl);
+    }
+
+    public function logout(&$tm)
+    {
+        $tm = $this->gen_timestamp();
+        $xml = sprintf('<?xml version="1.0" encoding="utf-8"?>
+            <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+            <soap:Body>
+            <logoutXML xmlns="http://tempuri.org/">
+            <membercode>%s</membercode>
+            <timeStamp>%s</timeStamp>
+            </logoutXML>
+            </soap:Body>
+            </soap:Envelope>', $this->_membercode, $tm);
+
+        var_dump($xml);exit;
 
         $curl = new Curl();
         $curl->setHeader('Content-Type', 'text/xml');
