@@ -85,7 +85,7 @@ class IMSportsbook extends CFormModel
             </soap:Body>
             </soap:Envelope>', $this->_membercode, $tm);
 
-        var_dump($xml);exit;
+        // var_dump($xml);exit;
 
         $curl = new Curl();
         $curl->setHeader('Content-Type', 'text/xml');
