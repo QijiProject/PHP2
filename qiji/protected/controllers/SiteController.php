@@ -75,13 +75,17 @@ class SiteController extends Controller
                 // var_dump($result);exit;
                 
                 if ($result->succ) {
-                    $url = 'http://imsports.kzonlinegame.com/?timestamp=' . $tm . '&token=' . $token . '&LanguageCode=chs';
+                    // $url = 'http://web.lokwen.net/?timestamp=' . $tm . '&token=' . $token . '&LanguageCode=chs';
+                    $url = 'http://sbimsports.qiji7878.com/?timestamp=' . $tm . '&token=' . $token . '&LanguageCode=chs';
                     $this->redirect($url);
                 } else {
-                    $this->redirect('http://imsports.kzonlinegame.com');
+                    // $this->redirect('http://sbdemo.inplaymatrix.com');
+                    // $this->redirect('http://imsports.kzonlinegame.com');
+                    $this->redirect('http://sbimsports.qiji7878.com');
                 }
             } else {
-                $this->redirect('http://imsports.kzonlinegame.com');
+                // $this->redirect('http://web.lokwen.net');
+                $this->redirect('http://sbimsports.qiji7878.com');
             }
         }
     }
@@ -112,8 +116,6 @@ class SiteController extends Controller
                 $msg = "You are not login!";
             }
         }
-        // Yii::app()->user->setFlash('notification','Your have been successfully logged in by facebook!');
-        // return $this->redirect(Yii::app()->homeUrl);
         return $this->redirect(array('site/index', 'msg'=>$msg));
     }
 
@@ -123,6 +125,21 @@ class SiteController extends Controller
     public function getVCToken()
     {
         return "1a2b3c-4d5e";
+    }
+
+    public function actionValidateToken()
+    {
+        $token = $this->getVCToken();
+
+        if(isset($_GET['token']) AND $token==$_GET['token'])
+        {
+            $data = array("membercode"=>"test","currency"=>"RMB","ipAddress"=>"10.18.11.208","statusCode"=>"100","statusDesc"=>"Success");
+            $data = json_encode($data);
+
+            header('Content-type: application/json');
+            header("Access-Control-Allow-Origin: *");
+            echo ($data);
+        }
     }
 
 }

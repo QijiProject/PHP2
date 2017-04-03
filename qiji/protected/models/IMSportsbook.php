@@ -53,6 +53,10 @@ class IMSportsbook extends CFormModel
     public function login(&$tm)
     {
         $tm = $this->gen_timestamp();
+        // var_dump($tm);
+        // echo "</br>";
+        // var_dump($this->_token);
+        // exit;
         $xml = sprintf('<?xml version="1.0" encoding="utf-8"?>
             <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
             <soap:Body>

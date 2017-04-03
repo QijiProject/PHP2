@@ -62,7 +62,8 @@ else
 
 <script>
 function getBalance() {
-    var uri = "http://10.101.1.87:8080/webproject/transaction/getBalance?membercode=test";
+    // var uri = "http://10.101.1.87:8080/webproject/transaction/getBalance?membercode=test";
+    var uri = "http://sbstaging.qiji7878.com/webproject/transaction/getBalance?membercode=test";
     var url = encodeURI(uri);
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -77,27 +78,34 @@ function getBalance() {
 }
 
 function getBalanceAjax() {
-    var uri = "http://10.101.1.87:8080/webproject/transaction/getBalance?membercode=test";
+    // var uri = "http://10.101.1.87:8080/webproject/transaction/getBalance?membercode=test";
+    var uri = "http://sbstaging.qiji7878.com/webproject/transaction/getBalance?membercode=test";
     var url = encodeURI(uri);
-    $.ajax({
-        url: url,
-        type: 'GET',
-        dataType: 'json',//server repsonse
-        contentType: 'application/json',
-        success: function (response) {
-            document.getElementById("balance").innerHTML=response.d.Body.getMemberBalanceXMLResponse.amount;
-            // alert(response);
-            // if (response.statusCode == '200') {
-            //     $("#balance").html=response.d.Body.withdrawXMLResponse.amount;
-            // }
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) { 
-            alert("Status: " + textStatus); alert("Error: " + errorThrown); 
-        },
-        complete: function () {
+    // $.ajax({
+    //     url: url,
+    //     type: 'GET',
+    //     dataType: 'json',//server repsonse
+    //     contentType: 'application/json',
+    //     success: function (response) {
+    //         // document.getElementById("balance").innerHTML=response.d.Body.getMemberBalanceXMLResponse.amount;
+    //         $("#balance").html(response.d.Body.getMemberBalanceXMLResponse.amount);
+    //         // alert(response);
+    //         // if (response.statusCode == '200') {
+    //             // $("#balance").html(response.d.Body.getMemberBalanceXMLResponse.amount);
+    //         // }
+    //     },
+    //     error: function(XMLHttpRequest, textStatus, errorThrown) { 
+    //         alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+    //     },
+    //     complete: function () {
 
-        }
-    });
+    //     }
+    // });
+
+    $.get(url, function(result, status){
+        // alert("Data: " + result + "\nStatus: " + status);
+        $("#balance").html(result);
+      });
 }
 
 function doDeposit() {
@@ -106,7 +114,8 @@ function doDeposit() {
     // var amount = document.getElementById("amount").value;
     // alert(amount);
 
-    var uri = "http://10.101.1.87:8080/webproject/transaction/doTransaction";
+    // var uri = "http://10.101.1.87:8080/webproject/transaction/doTransaction";
+    var uri = "http://sbstaging.qiji7878.com/webproject/transaction/doTransaction";
     var url = encodeURI(uri);
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -123,12 +132,13 @@ function doDeposit() {
 }
 
 function doDepositAjax() {    
-    var uri = "http://10.101.1.87:8080/webproject/transaction/doTransaction";
+    // var uri = "http://10.101.1.87:8080/webproject/transaction/doTransaction";
+    var uri = "http://sbstaging.qiji7878.com/webproject/transaction/doTransaction";
     var url = encodeURI(uri);
     // alert("Value: " + $("#amount").val());
 
     // var data = {"membercode": "test","amount": $("#amount").val(),"currencyCode": "RMB","tout": "10001","tin": "10000"};
-    var data = {"tout": "10001","tin": "10000"};
+    var data = {"amount": $("#amount").val(),"tout": "10001","tin": "10000"};
 
     $.ajax({
         url: url,
@@ -138,7 +148,8 @@ function doDepositAjax() {
         contentType: 'application/json',
         success: function (response) {
             // $("#balance").html=response.d.Body.withdrawXMLResponse.statusDesc;
-            document.getElementById("deposit").innerHTML=response.d.Body.depositXMLResponse.statusDesc+": "+$("#amount").val();
+            // document.getElementById("deposit").innerHTML=response.d.Body.depositXMLResponse.statusDesc+": "+$("#amount").val();
+            $("#deposit").html(response.d.Body.depositXMLResponse.statusDesc+": "+$("#amount").val());
             // alert(response.status);
             // alert(response.d.Body.withdrawXMLResponse.statusDesc);
             // console.log(response);
@@ -167,11 +178,12 @@ function doDepositAjax() {
 }
 
 function doWithdrawAjax() {    
-    var uri = "http://10.101.1.87:8080/webproject/transaction/doTransaction";
+    // var uri = "http://10.101.1.87:8080/webproject/transaction/doTransaction";
+    var uri = "http://sbstaging.qiji7878.com/webproject/transaction/doTransaction";
     var url = encodeURI(uri);
 
     // var data = {"membercode": "test","amount": $("#amountW").val(),"currencyCode": "RMB","tout": "10000","tin": "10001"};
-    var data = {"tout": "10000","tin": "10001"};
+    var data = {"amount": $("#amountW").val(),"tout": "10000","tin": "10001"};
 
     $.ajax({
         url: url,
@@ -181,7 +193,8 @@ function doWithdrawAjax() {
         contentType: 'application/json',
         success: function (response) {
             // $("#balance").html=response.d.Body.withdrawXMLResponse.statusDesc;
-            document.getElementById("withdraw").innerHTML=response.d.Body.withdrawXMLResponse.statusDesc+": "+$("#amountW").val();
+            // document.getElementById("withdraw").innerHTML=response.d.Body.withdrawXMLResponse.statusDesc+": "+$("#amountW").val();
+            $("#withdraw").html(response.d.Body.withdrawXMLResponse.statusDesc+": "+$("#amountW").val());
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) { 
             alert("Status: " + textStatus); alert("Error: " + errorThrown); 
