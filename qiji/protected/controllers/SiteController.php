@@ -16,7 +16,7 @@ class SiteController extends Controller
     public $prefix = "IM";
 
     public function actionIndex($msg=NULL)
-    { echo "dsdfsdf";
+    { echo "dsdfsdf";ds dd f;
         return $this->render('index',array('msg'=>$msg));
     }
 
